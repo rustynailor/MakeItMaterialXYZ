@@ -62,9 +62,9 @@ public class ArticleDetailActivity extends AppCompatActivity
             @Override
             public void onPageScrollStateChanged(int state) {
                 super.onPageScrollStateChanged(state);
-                mUpButton.animate()
+                /*mUpButton.animate()
                         .alpha((state == ViewPager.SCROLL_STATE_IDLE) ? 1f : 0f)
-                        .setDuration(300);
+                        .setDuration(300);*/
             }
 
             @Override
@@ -77,16 +77,17 @@ public class ArticleDetailActivity extends AppCompatActivity
             }
         });
 
-        mUpButtonContainer = findViewById(R.id.up_container);
 
-        mUpButton = findViewById(R.id.action_up);
-        mUpButton.setOnClickListener(new View.OnClickListener() {
+
+       /* mUpButtonContainer = findViewById(R.id.up_container);
+             mUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onSupportNavigateUp();
             }
-        });
+        });*/
 
+/*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mUpButtonContainer.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
                 @Override
@@ -98,7 +99,7 @@ public class ArticleDetailActivity extends AppCompatActivity
                     return windowInsets;
                 }
             });
-        }
+        }*/
 
         if (savedInstanceState == null) {
             if (getIntent() != null && getIntent().getData() != null) {
@@ -148,8 +149,8 @@ public class ArticleDetailActivity extends AppCompatActivity
     }
 
     private void updateUpButtonPosition() {
-        int upButtonNormalBottom = mTopInset + mUpButton.getHeight();
-        mUpButton.setTranslationY(Math.min(mSelectedItemUpButtonFloor - upButtonNormalBottom, 0));
+        //int upButtonNormalBottom = mTopInset + mUpButton.getHeight();
+        //mUpButton.setTranslationY(Math.min(mSelectedItemUpButtonFloor - upButtonNormalBottom, 0));
     }
 
     private class MyPagerAdapter extends FragmentStatePagerAdapter {
