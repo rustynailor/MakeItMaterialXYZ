@@ -44,14 +44,9 @@ public class ArticleDetailFragment extends Fragment implements
     private Cursor mCursor;
     private long mItemId;
     private View mRootView;
-    private int mMutedColor = 0xFF333333;
-
-    private ColorDrawable mStatusBarColorDrawable;
 
     private ImageView mPhotoView;
 
-    private boolean mIsCard = false;
-    private int mStatusBarFullOpacityBottom;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -76,9 +71,6 @@ public class ArticleDetailFragment extends Fragment implements
             mItemId = getArguments().getLong(ARG_ITEM_ID);
         }
 
-        mIsCard = getResources().getBoolean(R.bool.detail_is_card);
-        mStatusBarFullOpacityBottom = getResources().getDimensionPixelSize(
-                R.dimen.detail_card_top_margin);
         setHasOptionsMenu(true);
     }
 
@@ -95,11 +87,6 @@ public class ArticleDetailFragment extends Fragment implements
         // fragments because their mIndex is -1 (haven't been added to the activity yet). Thus,
         // we do this in onActivityCreated.
         getLoaderManager().initLoader(0, null, this);
-
-        //update appbar with back button and title
-        final Toolbar toolbar = (Toolbar) mRootView.findViewById(R.id.toolbar);
-        getActivityCast().setSupportActionBar(toolbar);
-        getActivityCast().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -129,9 +116,6 @@ public class ArticleDetailFragment extends Fragment implements
         });*/
 
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
-        ///PhotoContainerView = mRootView.findViewById(R.id.photo_container);
-
-        //mStatusBarColorDrawable = new ColorDrawable(0);
 
         mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,9 +140,7 @@ public class ArticleDetailFragment extends Fragment implements
             return;
         }
 
-
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
-        //bylineView.setMovementMethod(new LinkMovementMethod());
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
 
         if (mCursor != null) {
@@ -166,6 +148,11 @@ public class ArticleDetailFragment extends Fragment implements
             mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
+
+            //update appbar with back button and title
+            final Toolbar toolbar = (Toolbar) mRootView.findViewById(R.id.toolbar);
+            getActivityCast().setSupportActionBar(toolbar);
+            getActivityCast().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
             CollapsingToolbarLayout collapsingToolbar =
                     (CollapsingToolbarLayout) mRootView.findViewById(R.id.collapsing_toolbar);
@@ -186,13 +173,7 @@ public class ArticleDetailFragment extends Fragment implements
                         public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
                             Bitmap bitmap = imageContainer.getBitmap();
                             if (bitmap != null) {
-                                Palette p = Palette.generate(bitmap, 12);
-                                mMutedColor = p.getDarkMutedColor(0xFF333333);
                                 mPhotoView.setImageBitmap(imageContainer.getBitmap());
-                                //TODO: clean up / permanently remove
-                                //mRootView.findViewById(R.id.meta_bar)
-                                //        .setBackgroundColor(mMutedColor);
-                                //updateStatusBar();
                             }
                         }
 
