@@ -17,16 +17,13 @@
 
 <resources>
 
+    <!-- theme colours-->
     <color name="purple_300">#BA68C8</color>
     <color name="purple_500">#9C27B0</color>
     <color name="purple_700">#7B1FA2</color>
     <color name="reda200">#FF5252</color>
 
+    <!--placeholders and text -->
     <color name="photo_placeholder">#ccc</color>
-
-    <!--
-    <color name="theme_primary">#04561A</color>
-    <color name="theme_primary_dark">#04561A</color>
-    <color name="theme_accent">#04561A</color>
-    <color name="ltgray">#ffe0e0e0</color>-->
+    <color name="white">#ffffff</color>
 </resources>

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.app.Fragment;
 import android.support.v4.app.ShareCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -44,6 +45,8 @@ public class ArticleDetailFragment extends Fragment implements
     private Cursor mCursor;
     private long mItemId;
     private View mRootView;
+
+    private Boolean mIsVisible = false;
 
     private ImageView mPhotoView;
 
@@ -84,31 +87,38 @@ public class ArticleDetailFragment extends Fragment implements
         // the fragment's onCreate may cause the same LoaderManager to be dealt to multiple
         // fragments because their mIndex is -1 (haven't been added to the activity yet). Thus,
         // we do this in onActivityCreated.
-
-
-
-
-        Log.e(TAG, "On ActivityCreated");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.e(TAG, "On Start");
         getLoaderManager().initLoader(0, null, this);
-        //update appbar with back button
-        Toolbar toolbar = (Toolbar) mRootView.findViewById(R.id.toolbar);
-        getActivityCast().setSupportActionBar(toolbar);
-        getActivityCast().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        bindViews();
-
     }
 
+
+
+    //This fires when the fragment becomes visible
+    //It enables ius to apply the home button to the appropriate fragment
     @Override
-    public void onResume() {
-        super.onResume();
-        Log.e(TAG, "On Resume");
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+                mIsVisible = true;
+                setHomeButton();
+        } else {
+            mIsVisible = false;
+        }
     }
+
+
+    //set home button in app bar
+    //this sets the toolbar in this fragment as the activity toolbar
+    //and enables the home button
+    private void setHomeButton() {
+        //update appbar with back button
+        if(mRootView != null) {
+            Toolbar toolbar = (Toolbar) mRootView.findViewById(R.id.toolbar);
+            AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+            appCompatActivity.setSupportActionBar(toolbar);
+            appCompatActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -128,6 +138,11 @@ public class ArticleDetailFragment extends Fragment implements
         });
 
         bindViews();
+
+        if (mIsVisible) {
+            setHomeButton();
+        }
+
         return mRootView;
     }
 
@@ -136,6 +151,7 @@ public class ArticleDetailFragment extends Fragment implements
 
 
     private void bindViews() {
+
         if (mRootView == null) {
             return;
         }
@@ -158,9 +174,8 @@ public class ArticleDetailFragment extends Fragment implements
                             mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
                             System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
                             DateUtils.FORMAT_ABBREV_ALL).toString()
-                            + " by <font color='#ffffff'>"
-                            + mCursor.getString(ArticleLoader.Query.AUTHOR)
-                            + "</font>"));
+                            + " by "
+                            + mCursor.getString(ArticleLoader.Query.AUTHOR)));
             bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)));
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
                     .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
@@ -178,9 +193,7 @@ public class ArticleDetailFragment extends Fragment implements
                         }
                     });
         } else {
-            mRootView.setVisibility(View.GONE);
-            //titleView.setText("N/A");
-            bylineView.setText("N/A" );
+            bylineView.setText("N/A");
             bodyView.setText("N/A");
         }
     }
