@@ -86,7 +86,8 @@
                     android:paddingBottom="@dimen/detail_body_bottom_margin"
                     android:paddingTop="@dimen/article_body_padding_top"
                     android:textColorLink="?colorAccent"
-                    android:textSize="@dimen/detail_body_text_size" />
+                    android:textSize="@dimen/detail_body_text_size"
+                    android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier"/>
 
         </LinearLayout>
 
