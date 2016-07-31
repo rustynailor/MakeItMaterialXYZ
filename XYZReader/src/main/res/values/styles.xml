@@ -28,7 +28,7 @@
     <!-- based on stack overflow post: http://stackoverflow.com/questions/34185843/android-collapsing-toolbar-how-to-resize-the-text-so-that-it-shows-full-text-t-->
     <style name="TextAppearance.Title.Expanded" parent="android:TextAppearance">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">36sp</item>
     </style>
 
     <style name="TextAppearance.Title.Collapsed" parent="android:TextAppearance">
