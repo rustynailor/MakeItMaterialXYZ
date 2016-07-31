@@ -8,9 +8,15 @@
 
     <dimen name="home_screen_app_bar_height">112dp</dimen>
 
+    <dimen name="app_bar_elevation">4dp</dimen>
+
     <dimen name="fab_elevation">6dp</dimen>
     <dimen name="fab_press_translation_z">12dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="article_body_padding_top">32dp</dimen>
+
+    <dimen name="list_item_large_padding">16dp</dimen>
+    <dimen name="list_item_small_padding">4dp</dimen>
+    <dimen name="list_item_thumbnail_height">100dp</dimen>
 
 </resources>
